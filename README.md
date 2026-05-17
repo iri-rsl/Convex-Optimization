@@ -35,7 +35,7 @@ Convex-Optimization/
 
 ---
 
-## 📊 Schema du Dataset
+## Schema du Dataset
 
 | Column Name | Description | Data Type | Range/Values | Traitement |
 |---|---|---|---|---|
@@ -238,7 +238,7 @@ jupyter>=1.0.0
 
 ---
 
-## 📊 Validation et Vérification
+## Validation et Vérification
 
 Après exécution du pipeline, vérifiez la présence de `data/processed/clean_student_data.csv` :
 
@@ -253,7 +253,7 @@ python -c "import pandas as pd; df = pd.read_csv('data/processed/clean_student_d
 
 ---
 
-**Ce projet démontre une compréhension rigoureuse des mathématiques de l'optimisation convexe et des techniques modernes d'apprentissage automatique.**
+
 
 ## Dataset Source
 https://www.kaggle.com/datasets/aldinwhyudii/student-depression-and-lifestyle-100k-data
