@@ -9,7 +9,7 @@ Implémentation mathématique complète d'algorithmes d'apprentissage supervisé
 ```
 Convex-Optimization/
 ├── data/
-│   ├── raw/                          # Données brutes téléchargées depuis Kaggle
+│   ├── raw/                          # Données brutes téléchargées depuis Kaggle ( je l'ai pas mis dedans encore je le ferai dans la semaine, là je fais un appel direct à kaggle poru pas avoir à le télécharger )
 │   └── processed/                    # Données nettoyées et transformées (clean_student_data.csv)
 ├── notebooks/
 │   └── 1.0_data_preprocessing.ipynb  # Pipeline complet d'EDA et preprocessing
