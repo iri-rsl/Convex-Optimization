@@ -122,14 +122,36 @@ Using labels in {0, 1} breaks this multiplicative sign interpretation and does n
 
 ## Execution Commands
 
-### Prerequisites
-Install required Python packages:
+
+### **Pré-requis**
+Recommandé: Python >= 3.10.
+
+1) Créer et activer un environnement virtuel:
+
 
 ```bash
-pip install pandas numpy scikit-learn kagglehub jupyter
+# Windows (PowerShell)
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+# macOS / Linux
+python -m venv .venv
+source .venv/bin/activate
 ```
 
-Activate your virtual environment if applicable.
+
+2) Mettre à jour `pip` et installer les dépendances:
+
+```bash
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Si `requirements.txt` n'existe pas, installez au minimum:
+
+```bash
+pip install pandas numpy scikit-learn matplotlib jupyter
+```
 
 ### 1. Run the notebook end-to-end
 Open the notebook to execute the preprocessing interactively:
