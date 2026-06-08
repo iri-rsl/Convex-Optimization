@@ -136,13 +136,32 @@ Avec labels 0/1 (standard), cette formulation ne fonctionne pas car le produit $
 ## Commandes d'Exécution
 
 ### **Pré-requis**
-Avant de lancer le projet, installez les dépendances Python requises :
+Recommandé: Python >= 3.10.
+
+1) Créer et activer un environnement virtuel:
 
 ```bash
-pip install pandas numpy scikit-learn kagglehub jupyter
+# Windows (PowerShell)
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+# macOS / Linux
+python -m venv .venv
+source .venv/bin/activate
 ```
 
-Si vous travaillez dans un environnement virtuel, activez-le avant d'exécuter ces commandes.
+2) Mettre à jour `pip` et installer les dépendances:
+
+```bash
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Si `requirements.txt` n'existe pas, installez au minimum:
+
+```bash
+pip install pandas numpy scikit-learn matplotlib jupyter
+```
 
 ### **1. Lancer le Notebook complet**
 Ouvrez le notebook pour exécuter pas à pas tout le prétraitement, y compris l'injection des variables socio-économiques :
