@@ -39,67 +39,34 @@ Convex-Optimization/
 
 ## Dataset Schema
 
-| Column Name            | Description                    | Data Type | Range/Values                | Processing           |
-|------------------------|--------------------------------|-----------|-----------------------------|----------------------|
-| **Student_ID**         | Unique identifier              | Integer   | Unique IDs                  | Removed              |
-| **Age**                | Student age                    | Integer   | 18–24                       | Standardized         |
-| **Gender**             | Gender                         | String    | Male, Female                | One-hot encoded      |
-| **Department**         | Field of study                 | String    | Engineering, Business, Arts | One-hot encoded      |
-| **CGPA**               | Cumulative Grade Point Average | Float     | 0.0–4.0                     | Standardized         |
-| **Sleep_Duration**     | Hours of sleep per night       | Float     | Continuous                  | Standardized         |
-| **Study_Hours**        | Study hours per day            | Float     | Continuous                  | Standardized         |
-| **Social_Media_Hours** | Hours on social media per day  | Float     | Continuous                  | Standardized         |
-| **Physical_Activity**  | Minutes of activity per week   | Integer   | Continuous                  | Standardized         |
-| **Stress_Level**       | Self-reported stress level     | Integer   | 0–10                        | Standardized         |
-| **Depression**         | Mental health status           | Boolean   | True / False                | Converted to {-1, 1} |
+| Column Name             | Description                                   | Data Type | Range/Values                       |
+|-------------------------|-----------------------------------------------|-----------|------------------------------------|
+| **Student_ID**          | Unique identifier for each student            | Integer   | Unique IDs                         |
+| **Age**                 | Age of the student                            | Integer   | 18-24                              |
+| **Gender**              | Gender of the student                         | String    | Male, Female                       |
+| **Department**          | Field of study                                | String    | Engineering, Business, Arts, etc.  |
+| **CGPA**                | Cumulative Grade Point Average                | Float     | 0.0 - 4.0                          |
+| **Sleep_Duration**      | Average hours of sleep per night              | Float     | Continuous                         |
+| **Study_Hours**         | Average hours spent studying per day          | Float     | Continuous                         |
+| **Social_Media_Hours**  | Average hours spent on social media per day   | Float     | Continuous                         |
+| **Physical_Activity**   | Average minutes of physical activity per week | Integer   | Continuous                         |
+| **Stress_Level**        | Self-reported stress level                    | Integer   | 0-10                               |
+| **Depression**          | Mental health status                          | Boolean   | True (Depression), False (Healthy) |
+| **Transportation_Time** | Time from house to school                     | Integer   | 0-120                              |
+| **Student_debt**        | Does the student have a debt                  | Integer   | 1 (Debt), 0 (No debt)              |
+| **Part_Time_Job**       | Does the student have a partial Job           | Integer   | 1 (Job), 0 (No Job)                |
+| **Living_status**       | How does the student live                     | Strng     | Alone, Family                      |
 
 ---
 
-The pipeline follows exactly six sequential steps:
-
-### Step 1: Loading via Kagglehub
-- Direct download using the Kaggle Dataset API
-- Dataset: `aldinwhyudii/student-depression-and-lifestyle-100k-data`
-- Format: CSV with 100,000 observations
-
-### Step 2: Quality Control
-- Check for missing values (`isnull().sum()`) per column
-- Remove the non-informative identifier `Student_ID` (unique integer)
-  - Rationale: The identifier carries no predictive signal and should not be used for model training
-
-### Step 3: One-Hot Encoding (Categorical)
-- Affected columns: `Gender`, `Department`, etc.
-- Parameters: `drop='first'` to avoid multicollinearity
-- Result: Independent binary indicator variables (0/1)
-
-### Step 4: Numeric Standardization (Scaling)
-- Columns standardized (7 features):
-  - `Age`, `CGPA`, `Sleep_Duration`, `Study_Hours`, `Social_Media_Hours`, `Physical_Activity`, `Stress_Level`
-- Operation: $x_{\text{scaled}} = \frac{x - \mu}{\sigma}$
-- Guarantees: mean = 0, std = 1 for each feature
-
-### Step 5: Target Transformation
-- Source column: `Depression` (Boolean)
-  - `True` = Probable depression
-  - `False` = Healthy
-- Convert to {**-1, 1**} binary labels:
-  - `True` → `1`
-  - `False` → `-1`
-- Rationale: Required for the mathematical formulation of the SVM hinge loss
-
-### Step 6: Export
-- Final format: CSV (`data/processed/clean_student_data.csv`)
-- Indices removed to avoid redundancy
-
----
-
-## Mathematical Justifications
+## Mathematical Justifications of Preprocessing Steps
 
 ### Why Standardize Features?
 
 Standardization (centering + scaling) is critical for SGD convergence:
 
-1. Prevents weight divergence: features with large amplitude (e.g., `Physical_Activity`) produce disproportionately large gradients compared to features with small ranges (e.g., `Age`).
+1. Prevents weight divergence: features with large amplitude (e.g., `Physical_Activity`) produce disproportionately 
+large gradients compared to features with small ranges (e.g., `Age`).
 2. Accelerates convergence: standardization makes the cost surface more symmetric, enabling more efficient exploration by SGD.
 3. Mathematical formulation:
 $$x_{\text{standardized}} = \frac{x - \mathbb{E}[x]}{\sqrt{\mathrm{Var}(x)}}$$
@@ -129,10 +96,10 @@ Using labels in {0, 1} breaks this multiplicative sign interpretation and does n
 ## Execution Commands
 
 
-### **Pré-requis**
-Recommandé: Python >= 3.10.
+### **Prerequisites**
+Recommended: Python >= 3.10.
 
-1) Créer et activer un environnement virtuel:
+1) Create and activate a virtual environment:
 
 
 ```bash
@@ -146,27 +113,23 @@ source .venv/bin/activate
 ```
 
 
-2) Mettre à jour `pip` et installer les dépendances:
+2) Upgrade pip and install dependencies:
 
 ```bash
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Si `requirements.txt` n'existe pas, installez au minimum:
-
-```bash
-pip install pandas numpy scikit-learn matplotlib jupyter
-```
-
-### 1. Run the notebook end-to-end
+### 1. Run the preprocessing notebook end-to-end
 Open the notebook to execute the preprocessing interactively:
 
 ```bash
 jupyter notebook notebooks/1.0_data_preprocessing.ipynb
 ```
 
-Run cells sequentially from the first cell through the export. The notebook downloads the Kaggle dataset, injects socio-economic variables, encodes categorical variables, standardizes numeric features, transforms the target, and exports the final CSV.
+Run cells sequentially from the first cell through the export. The notebook downloads the Kaggle dataset, injects 
+socio-economic variables, encodes categorical variables, standardizes numeric features, transforms the target, and exports 
+the final CSV.
 
 ### 2. Run the automated pipeline
 Execute the pipeline script from the project root to run the full flow non-interactively:
@@ -175,7 +138,8 @@ Execute the pipeline script from the project root to run the full flow non-inter
 python src/preprocessing/pipeline.py
 ```
 
-This script reproduces the same sequence as the notebook: Kaggle download, socio-economic feature injection, quality control, one-hot encoding, standardization, target transformation, and CSV export.
+This script reproduces the same sequence as the notebook: Kaggle download, socio-economic feature injection, quality 
+control, one-hot encoding, standardization, target transformation, and CSV export.
 
 ### 3. Reuse the pipeline in another Python script
 Import pipeline functions for integration into model training or other scripts:
@@ -211,31 +175,20 @@ save_processed_data(df)
 
 The `src/models/` directory will contain the following mathematical implementations:
 
-### Module 1: Convex Linear SVM
+### Notebook 2: Convex Linear SVM
 - Optimizer: Stochastic Gradient Descent (SGD)
 - Primal formulation:
 $$\min_{w,b} \frac{1}{2}\|w\|^2 + C \sum_{i=1}^n \xi_i$$
 with soft-margin constraints $y_i (w^T x_i + b) \ge 1 - \xi_i$.
 - KKT conditions for optimality and Lagrangian dual formulation for convergence analysis.
 
-### Module 2: Non-Convex Neural Network
+### Notebook 3: Non-Convex Neural Network
 - Architecture: Feedforward layers with ReLU activations
 - Loss: Binary cross-entropy
-- Optimizers: SGD with momentum / Adam
+- Optimizer: Adam
 - No global convergence guarantees (non-convex loss surface)
 
 ---
-
-## Future Integration Notes
-
-### Additional Features (Phase 2)
-The following socio-economic features will be added later:
-- Student debt
-- Transportation costs
-- Housing type and costs
-- Employment status and income
-
-Strategy: Add these columns after Step 2 (Quality Control) and apply the same encoding and scaling as current features. The SVM and neural network architectures will remain unchanged.
 
 ### Required Python Dependencies
 
