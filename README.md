@@ -1,4 +1,6 @@
-Comprehensive mathematical implementation of linear and non-linear supervised learning algorithms applied to the "Student Depression and Lifestyle" dataset (100k rows) from Kaggle.
+# Convex Optimization Project
+*Comprehensive mathematical implementation of linear and non-linear supervised learning algorithms applied to the 
+"Student Depression and Lifestyle" dataset (100k rows) from Kaggle.*
 
 ---
 
@@ -16,9 +18,13 @@ Convex-Optimization/
 │   ├── preprocessing/
 │   │   ├── __init__.py
 │   │   └── pipeline.py               # Script to automate preprocessing
-│   └── models/                       # Placeholder for SVM and neural network implementations
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── 2.0_linear_svm.ipynb      # Convex SVM implementation and training
+│   │   ├── 3.0_NN_training.ipynb     # Non-convex neural network implementation and training
+│   │   └── binary_mlp_pytorch.pt     # Pre-trained PyTorch model weights
 ├── README.md                         # This file
-└── [requirements.txt]               # (Optional) Python dependencies
+└── requirements.txt                  # Python dependencies
 ```
 
 ### Directory Roles
@@ -33,19 +39,19 @@ Convex-Optimization/
 
 ## Dataset Schema
 
-| Column Name | Description | Data Type | Range/Values | Processing |
-|---|---|---|---|---|
-| **Student_ID** | Unique identifier | Integer | Unique IDs | Removed |
-| **Age** | Student age | Integer | 18–24 | Standardized |
-| **Gender** | Gender | String | Male, Female | One-hot encoded |
-| **Department** | Field of study | String | Engineering, Business, Arts | One-hot encoded |
-| **CGPA** | Cumulative Grade Point Average | Float | 0.0–4.0 | Standardized |
-| **Sleep_Duration** | Hours of sleep per night | Float | Continuous | Standardized |
-| **Study_Hours** | Study hours per day | Float | Continuous | Standardized |
-| **Social_Media_Hours** | Hours on social media per day | Float | Continuous | Standardized |
-| **Physical_Activity** | Minutes of activity per week | Integer | Continuous | Standardized |
-| **Stress_Level** | Self-reported stress level | Integer | 0–10 | Standardized |
-| **Depression** | Mental health status | Boolean | True / False | Converted to {-1, 1} |
+| Column Name            | Description                    | Data Type | Range/Values                | Processing           |
+|------------------------|--------------------------------|-----------|-----------------------------|----------------------|
+| **Student_ID**         | Unique identifier              | Integer   | Unique IDs                  | Removed              |
+| **Age**                | Student age                    | Integer   | 18–24                       | Standardized         |
+| **Gender**             | Gender                         | String    | Male, Female                | One-hot encoded      |
+| **Department**         | Field of study                 | String    | Engineering, Business, Arts | One-hot encoded      |
+| **CGPA**               | Cumulative Grade Point Average | Float     | 0.0–4.0                     | Standardized         |
+| **Sleep_Duration**     | Hours of sleep per night       | Float     | Continuous                  | Standardized         |
+| **Study_Hours**        | Study hours per day            | Float     | Continuous                  | Standardized         |
+| **Social_Media_Hours** | Hours on social media per day  | Float     | Continuous                  | Standardized         |
+| **Physical_Activity**  | Minutes of activity per week   | Integer   | Continuous                  | Standardized         |
+| **Stress_Level**       | Self-reported stress level     | Integer   | 0–10                        | Standardized         |
+| **Depression**         | Mental health status           | Boolean   | True / False                | Converted to {-1, 1} |
 
 ---
 
@@ -241,7 +247,7 @@ kagglehub>=0.1.0
 jupyter>=1.0.0
 ```
 
-(Install via `pip install -r requirements.txt` if available.)
+(Install via `pip install -r requirements.txt`)
 
 ---
 
